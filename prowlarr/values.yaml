@@ -28,9 +28,15 @@ gateway:
     replicas:
       - name: eu-central-vienna-1
         zone: VIE
+      - name: eu-central-vienna-2
+        zone: VIE
       - name: eu-central-budapest-1
         zone: BUD
+      - name: eu-central-budapest-2
+        zone: BUD
       - name: eu-central-prague-1
+        zone: PRG
+      - name: eu-central-prague-2
         zone: PRG
   externalSecret:
     enabled: true
