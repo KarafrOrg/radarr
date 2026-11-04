@@ -1,0 +1,57 @@
+{{- if not .Values.prowlarr.apiKeySecretRef.name }}
+{{- fail "prowlarr.apiKeySecretRef.name must reference a Kubernetes Secret created by External Secrets Operator or managed elsewhere" }}
+{{- end }}
+{{- if not .Values.prowlarr.apiKeySecretRef.key }}
+{{- fail "prowlarr.apiKeySecretRef.key is required" }}
+{{- end }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "configarr.fullname" . }}
+  labels:
+    {{- include "configarr.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: {{ include "configarr.fullname" . }}
+            app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: configarr
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              env:
+                - name: PROWLARR_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.prowlarr.apiKeySecretRef.name }}
+                      key: {{ .Values.prowlarr.apiKeySecretRef.key }}
+              {{- with .Values.envFrom }}
+              envFrom:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              volumeMounts:
+                - name: config
+                  mountPath: /app/config/config.yml
+                  subPath: config.yml
+                  readOnly: true
+                - name: repos
+                  mountPath: /app/repos
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "configarr.fullname" . }}-config
+            - name: repos
+              persistentVolumeClaim:
+                claimName: {{ include "configarr.fullname" . }}-repos

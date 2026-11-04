@@ -25,6 +25,13 @@ spec:
             - name: {{ $name }}
               value: {{ $value | quote }}
             {{- end }}
+            {{- with .Values.auth.apiKeySecretRef.name }}
+            - name: PROWLARR__AUTH__APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ . }}
+                  key: {{ $.Values.auth.apiKeySecretRef.key }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 9696

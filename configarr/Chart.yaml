@@ -1,0 +1,14 @@
+apiVersion: v2
+name: configarr
+description: Declarative Servarr configuration using Configarr
+type: application
+version: 0.1.0
+appVersion: "1.39.0"
+maintainers:
+  - name: KarafrOrg
+    email: karafra@karafra.net
+keywords:
+  - configarr
+  - prowlarr
+  - servarr
+  - homelab

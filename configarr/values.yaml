@@ -1,0 +1,38 @@
+image:
+  repository: ghcr.io/raydak-labs/configarr
+  pullPolicy: IfNotPresent
+  tag: "1.39.0"
+
+schedule: "0 * * * *"
+
+prowlarr:
+  url: http://prowlarr-svc:9696
+  apiKeySecretRef:
+    name: prowlarr-api
+    key: PROWLARR_API_KEY
+
+externalSecret:
+  enabled: false
+  refreshInterval: 1h
+  secretStoreRef:
+    name: ""
+    kind: ClusterSecretStore
+  data: []
+
+envFrom: []
+
+cache:
+  storageClassName: ""
+  size: 1Gi
+
+resources: {}
+
+config: |-
+  prowlarr:
+    main:
+      base_url: __PROWLARR_URL__
+      api_key: !env PROWLARR_API_KEY
+      indexers:
+        data: []
+      applications:
+        data: []
