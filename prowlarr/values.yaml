@@ -19,6 +19,22 @@ service:
   type: ClusterIP
   port: 9696
 
+gateway:
+  enabled: true
+  name: ""
+  className: cloudflare-tunnel
+  credentialsSecretName: cloudflare-gateway-creds
+  tunnel:
+    replicas: []
+  externalSecret:
+    enabled: false
+    refreshInterval: 1h
+    secretStoreRef:
+      name: ""
+      kind: ClusterSecretStore
+    accountIdRemoteRef: ""
+    apiTokenRemoteRef: ""
+
 route:
   enabled: true
   hostname: prowlarr.karafra.net

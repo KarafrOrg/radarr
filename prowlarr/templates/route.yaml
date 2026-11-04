@@ -7,7 +7,12 @@ metadata:
     {{- include "prowlarr.labels" . | nindent 4 }}
 spec:
   parentRefs:
+    {{- if .Values.gateway.enabled }}
+    - name: {{ default (include "prowlarr.fullname" .) .Values.gateway.name }}
+      namespace: {{ .Release.Namespace }}
+    {{- else }}
     {{- toYaml .Values.route.parentRefs | nindent 4 }}
+    {{- end }}
   hostnames:
     - {{ .Values.route.hostname | quote }}
   rules:

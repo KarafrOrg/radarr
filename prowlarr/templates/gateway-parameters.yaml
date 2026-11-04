@@ -1,0 +1,50 @@
+{{- if .Values.gateway.enabled }}
+apiVersion: cloudflare-gateway-controller.io/v1
+kind: CloudflareGatewayParameters
+metadata:
+  name: {{ default (include "prowlarr.fullname" .) .Values.gateway.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretRef:
+    name: {{ .Values.gateway.credentialsSecretName }}
+  tunnel:
+    patches:
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+      - op: add
+        path: /spec/template/spec/nodeSelector
+        value:
+          node-role.kubernetes.io/control-plane: ""
+      - op: add
+        path: /spec/template/spec/topologySpreadConstraints
+        value:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: cloudflared
+                app.kubernetes.io/instance: {{ default (include "prowlarr.fullname" .) .Values.gateway.name }}
+    {{- if .Values.gateway.tunnel.replicas }}
+    replicas:
+      {{- range .Values.gateway.tunnel.replicas }}
+      - name: {{ .name }}
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                preference:
+                  matchExpressions:
+                    - key: topology.kubernetes.io/zone
+                      operator: In
+                      values:
+                        - {{ .zone }}
+      {{- end }}
+    {{- else }}
+    replicas: []
+    {{- end }}
+{{- end }}
