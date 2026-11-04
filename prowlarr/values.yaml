@@ -25,7 +25,13 @@ gateway:
   className: cloudflare-tunnel
   credentialsSecretName: cloudflare-gateway-creds
   tunnel:
-    replicas: []
+    replicas:
+      - name: eu-central-vienna-1
+        zone: VIE
+      - name: eu-central-budapest-1
+        zone: BUD
+      - name: eu-central-prague-1
+        zone: PRG
   externalSecret:
     enabled: true
     refreshInterval: 1h
