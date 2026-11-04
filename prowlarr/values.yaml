@@ -58,3 +58,30 @@ resources:
   requests:
     cpu: 50m
     memory: 64Mi
+
+# GitHub SSO via oauth2-proxy in front of Prowlarr (Prowlarr has no native OIDC).
+# Requires a GitHub OAuth app with callback https://<route.hostname>/oauth2/callback.
+sso:
+  enabled: true
+  image:
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    tag: v7.7.1
+  github:
+    org: KarafrOrg
+    team: prowlarr-admins
+    users: []
+  secretName: prowlarr-oauth2-proxy
+  externalSecret:
+    refreshInterval: 1h
+    secretStoreRef:
+      name: gcp-cluster-secret-store
+      kind: ClusterSecretStore
+    clientIdRemoteRef: prowlarr-github-client-id
+    clientSecretRemoteRef: prowlarr-github-client-secret
+    cookieSecretRemoteRef: prowlarr-oauth-cookie-secret
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
