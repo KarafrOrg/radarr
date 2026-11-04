@@ -27,13 +27,13 @@ gateway:
   tunnel:
     replicas: []
   externalSecret:
-    enabled: false
+    enabled: true
     refreshInterval: 1h
     secretStoreRef:
-      name: ""
+      name: gcp-cluster-secret-store
       kind: ClusterSecretStore
-    accountIdRemoteRef: ""
-    apiTokenRemoteRef: ""
+    accountIdRemoteRef: cloudflare-account-id
+    apiTokenRemoteRef: cloudflare-api-token
 
 route:
   enabled: true
