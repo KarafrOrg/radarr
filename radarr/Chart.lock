@@ -1,6 +1,0 @@
-dependencies:
-- name: radarr
-  repository: https://homeenterpriseinc.github.io/helm-charts/
-  version: "0.2"
-digest: sha256:5f4af91bd7e1a9cd4d12e6db573dea343ba6710baaf118d8f6c23f7f7f7687e4
-generated: "2026-01-05T19:05:59.106368+01:00"

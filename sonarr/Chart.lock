@@ -1,6 +1,0 @@
-dependencies:
-- name: sonarr
-  repository: https://homeenterpriseinc.github.io/helm-charts/
-  version: "0.2"
-digest: sha256:c91599a17f99f812ff9cbfede3e44b2ace0e19c521316e03353e9987d74ce462
-generated: "2026-01-05T22:42:05.74892+01:00"
