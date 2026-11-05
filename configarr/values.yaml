@@ -1,3 +1,4 @@
+
 image:
   repository: ghcr.io/raydak-labs/configarr
   pullPolicy: IfNotPresent
@@ -32,7 +33,28 @@ config: |-
     main:
       base_url: __PROWLARR_URL__
       api_key: !env PROWLARR_API_KEY
+
       indexers:
-        data: []
+        data:
+          - name: Internet Archive
+            definition: internetarchive
+            enable: true
+            priority: 1
+            sync_profile: Standard
+
+        delete_unmanaged:
+          enabled: false
+
       applications:
         data: []
+
+      sync_profiles:
+        data:
+          - name: Standard
+            enable_rss: true
+            enable_automatic_search: true
+            enable_interactive_search: true
+            minimum_seeders: 1
+
+        delete_unmanaged:
+          enabled: false
