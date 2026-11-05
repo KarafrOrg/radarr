@@ -47,7 +47,7 @@ gateway:
         zone: PRG
   externalSecret:
     enabled: true
-    refreshInterval: 30m
+    refreshInterval: 1h
     secretStoreRef:
       name: gcp-cluster-secret-store
       kind: ClusterSecretStore
