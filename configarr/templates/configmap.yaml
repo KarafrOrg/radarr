@@ -6,4 +6,4 @@ metadata:
     {{- include "configarr.labels" . | nindent 4 }}
 data:
   config.yml: |-
-    {{- .Values.config | replace "__PROWLARR_URL__" .Values.prowlarr.url | nindent 4 }}
+    {{- .Values.config | nindent 4 }}

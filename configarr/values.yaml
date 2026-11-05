@@ -1,4 +1,3 @@
-
 image:
   repository: ghcr.io/raydak-labs/configarr
   pullPolicy: IfNotPresent
@@ -18,20 +17,20 @@ externalSecret:
   secretStoreRef:
     name: ""
     kind: ClusterSecretStore
-  data: []
+  data: [ ]
 
-envFrom: []
+envFrom: [ ]
 
 cache:
   storageClassName: ""
   size: 1Gi
 
-resources: {}
+resources: { }
 
 config: |-
   prowlarr:
     main:
-      base_url: __PROWLARR_URL__
+      base_url: http://radarr-prowlarr-svc:9696
       api_key: !env PROWLARR_API_KEY
 
       indexers:
