@@ -3,25 +3,27 @@ kind: ConfigMap
 metadata:
     name: {{ include "prowlarr.fullname" . }}-config
     labels:
-        {{- include "prowlarr.labels" . | nindent 4 }}
+      {{- include "prowlarr.labels" . | nindent 4 }}
+    namespace: {{ .Release.Namespace }}
 data:
     # language=xml
     config.xml: |
       <Config>
-        <BindAddress>*</BindAddress>
-        <Port>9696</Port>
-        <SslPort>6969</SslPort>
-        <EnableSsl>False</EnableSsl>
-        <LaunchBrowser>True</LaunchBrowser>
-        <AuthenticationMethod>None</AuthenticationMethod>
-        <AuthenticationRequired>Enabled</AuthenticationRequired>
-        <AllowedHosts></AllowedHosts>
-        <Branch>master</Branch>
-        <LogLevel>debug</LogLevel>
-        <SslCertPath></SslCertPath>
-        <SslCertPassword></SslCertPassword>
-        <UrlBase></UrlBase>
-        <TrustedNetworks></TrustedNetworks>
-        <InstanceName>Prowlarr</InstanceName>
-        <UpdateMechanism>Docker</UpdateMechanism>
+          <BindAddress>*</BindAddress>
+          <Port>9696</Port>
+          <SslPort>6969</SslPort>
+          <EnableSsl>False</EnableSsl>
+          <LaunchBrowser>True</LaunchBrowser>
+          <AuthenticationMethod>None</AuthenticationMethod>
+          <AuthenticationRequired>Enabled</AuthenticationRequired>
+          <AllowedHosts></AllowedHosts>
+          <Branch>master
+          </Branch>
+          <LogLevel>debug</LogLevel>
+          <SslCertPath></SslCertPath>
+          <SslCertPassword></SslCertPassword>
+          <UrlBase></UrlBase>
+          <TrustedNetworks></TrustedNetworks>
+          <InstanceName>Prowlarr</InstanceName>
+          <UpdateMechanism>Docker</UpdateMechanism>
       </Config>

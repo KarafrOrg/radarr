@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -111,7 +110,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ default (printf "%s-config" (include "prowlarr.fullname" .)) .Values.persistence.existingClaim }}
           {{- else }}
-          emptyDir: {}
+          emptyDir: { }
           {{- end }}
 
         - name: config-template
