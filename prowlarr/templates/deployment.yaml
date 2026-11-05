@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,6 +17,46 @@ spec:
         app.kubernetes.io/name: {{ include "prowlarr.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      initContainers:
+        - name: init-config
+          image: alpine:3.22
+          imagePullPolicy: IfNotPresent
+          # language=sh
+          command:
+            - sh
+            - -ec
+            - |
+              CONFIG_FILE="/config/config.xml"
+
+              if [ ! -f "${CONFIG_FILE}" ]; then
+                echo "Initializing Prowlarr configuration..."
+                cp /config-template/config.xml "${CONFIG_FILE}"
+              fi
+
+              if [ -z "${PROWLARR_API_KEY:-}" ]; then
+                echo "ERROR: PROWLARR_API_KEY is empty"
+                exit 1
+              fi
+
+              sed -i \
+              "s|</Config>|  <ApiKey>${PROWLARR_API_KEY}</ApiKey>\n</Config>|" \
+              "${CONFIG_FILE}"
+
+              echo "Prowlarr configuration initialized."
+          env:
+            - name: PROWLARR_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.auth.apiKeySecretRef.name }}
+                  key: {{ .Values.auth.apiKeySecretRef.key }}
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: config-template
+              mountPath: /config-template/config.xml
+              subPath: config.xml
+              readOnly: true
+
       containers:
         - name: prowlarr
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -63,6 +104,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+
       volumes:
         - name: config
           {{- if .Values.persistence.enabled }}
@@ -71,3 +113,7 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+
+        - name: config-template
+          configMap:
+            name: {{ include "prowlarr.fullname" . }}-config

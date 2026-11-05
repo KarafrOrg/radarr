@@ -12,8 +12,15 @@ env:
 
 auth:
   apiKeySecretRef:
-    name: ""
+    name: "prowlarr-api-key"
     key: PROWLARR_API_KEY
+  externalSecret:
+    enabled: true
+    refreshInterval: 1h
+    secretStoreRef:
+      name: gcp-cluster-secret-store
+      kind: ClusterSecretStore
+    prowlarrApiKeyRemoteRef: prowlarr-api-key
 
 service:
   type: ClusterIP
