@@ -28,6 +28,7 @@ cache:
 resources: { }
 
 config: |-
+  config: |-
   prowlarr:
     main:
       base_url: http://radarr-prowlarr-svc:9696
@@ -35,10 +36,22 @@ config: |-
 
       indexers:
         data:
-          - name: Internet Archive
-            definition: internetarchive
+          - name: TorrentsCSV
+            definition: torrentscsv
             enable: true
             priority: 1
+            sync_profile: Standard
+
+          - name: LinuxTracker
+            definition: linuxtracker
+            enable: true
+            priority: 2
+            sync_profile: Standard
+
+          - name: Nyaa.si
+            definition: nyaasi
+            enable: true
+            priority: 3
             sync_profile: Standard
 
         delete_unmanaged:
