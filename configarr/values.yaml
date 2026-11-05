@@ -7,7 +7,7 @@ image:
 schedule: "0 * * * *"
 
 prowlarr:
-  url: http://prowlarr-svc:9696
+  url: http://radarr-prowlarr-svc:9696
   apiKeySecretRef:
     name: prowlarr-api-key
     key: PROWLARR_API_KEY
