@@ -143,7 +143,7 @@ local usageRateFields = {
 };
 
 g.dashboard.new('Persistent volumes')
-+ g.dashboard.withDescription('Monitors all persistent volumes that exist within a Kubernetes cluster. Prometheus is used as datasource. ')
++ g.dashboard.withDescription('Monitors all persistent volumes that exist within a Kubernetes cluster. Prometheus is used as datasource.')
 + g.dashboard.withTags([
   'kubernetes',
   'storage',
@@ -218,7 +218,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 22, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: forecastFields }
   + g.panel.stat.queryOptions.withTransformations(organizeTransformations),
   g.panel.stat.new('PVCs Full in 5 days - Based on Daily Usage')
@@ -229,7 +228,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 28, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: forecastFields }
   + g.panel.stat.queryOptions.withTransformations(organizeTransformations),
   g.panel.stat.new('PVCs Full in 1 Week - Based on Daily Usage')
@@ -240,7 +238,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 27, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: forecastFields }
   + g.panel.stat.queryOptions.withTransformations(organizeTransformations),
   g.panel.stat.new('PVCs Above Warning Threshold')
@@ -251,7 +248,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 21, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: {
     defaults: {
       color: {
@@ -286,7 +282,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 24, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: statusFields }
   + g.panel.stat.queryOptions.withTransformations(organizeTransformations),
   g.panel.stat.new('PVCs in Lost State')
@@ -297,7 +292,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 23, pluginVersion: '12.3.1' }
   + { options: statOptions, fieldConfig: statusFields }
   + g.panel.stat.queryOptions.withTransformations(organizeTransformations),
   g.panel.row.new('Usage statistics')
@@ -333,7 +327,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withInstant(true)
     + g.query.prometheus.withRefId('F'),
   ])
-  + { id: 29, pluginVersion: '12.3.1' }
   + { options: {
     frameIndex: 2,
     sortBy: [
@@ -465,9 +458,7 @@ g.dashboard.new('Persistent volumes')
     g.query.prometheus.new('mimir', 'kube_storageclass_info')
     + g.query.prometheus.withFormat('table')
     + g.query.prometheus.withRefId('A'),
-  ])
-  + { id: 7, pluginVersion: '12.3.1' }
-  + { options: {
+  ]) + { options: {
     sortBy: [
       {
         desc: true,
@@ -562,7 +553,7 @@ g.dashboard.new('Persistent volumes')
       },
     },
   ]),
-  g.panel.row.new('Graphical usage data ')
+  g.panel.row.new('Storage volume over time')
   + g.panel.row.withId(15)
   + g.panel.row.withGridPos(27)
   + g.panel.row.withPanels([]),
@@ -574,7 +565,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withLegendFormat('{{namespace}} ({{persistentvolumeclaim}})')
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 9, pluginVersion: '12.3.1' }
   + { options: {
     alertThreshold: true,
     legend: {
@@ -661,7 +651,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withLegendFormat('{{namespace}} ({{persistentvolumeclaim}})')
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 11, pluginVersion: '12.3.1' }
   + { options: usageRateOptions, fieldConfig: usageRateFields },
   g.panel.timeSeries.new('Daily Volume Usage Rate')
   + g.panel.timeSeries.panelOptions.withGridPos(h=7, w=24, x=0, y=48)
@@ -671,7 +660,6 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withLegendFormat('{{namespace}} ({{persistentvolumeclaim}})')
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 12, pluginVersion: '12.3.1' }
   + { options: usageRateOptions, fieldConfig: usageRateFields },
   g.panel.timeSeries.new('Weekly Volume Usage Rate')
   + g.panel.timeSeries.panelOptions.withGridPos(h=7, w=24, x=0, y=55)
@@ -682,6 +670,5 @@ g.dashboard.new('Persistent volumes')
     + g.query.prometheus.withLegendFormat('{{namespace}} ({{persistentvolumeclaim}})')
     + g.query.prometheus.withRefId('A'),
   ])
-  + { id: 13, pluginVersion: '12.3.1' }
   + { options: usageRateOptions, fieldConfig: usageRateFields },
 ], setPanelIDs=false)
