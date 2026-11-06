@@ -142,8 +142,13 @@ local usageRateFields = {
   },
 };
 
-g.dashboard.new('kubernetes-persistent-volumes')
-+ g.dashboard.withDescription('Monitors all persistent volumes that exists within a Kubernetes cluster. Prometheus is used as datasource. ')
+g.dashboard.new('Persistent volumes')
++ g.dashboard.withDescription('Monitors all persistent volumes that exist within a Kubernetes cluster. Prometheus is used as datasource. ')
++ g.dashboard.withTags([
+  'kubernetes',
+  'storage',
+  'infra',
+])
 + g.dashboard.withRefresh('1m')
 + g.dashboard.withAnnotations([
   {
@@ -163,17 +168,6 @@ g.dashboard.new('kubernetes-persistent-volumes')
 + g.dashboard.time.withFrom('now-24h')
 + g.dashboard.time.withTo('now')
 + g.dashboard.withVariables([
-  g.dashboard.variable.datasource.new('datasource', 'prometheus') + {
-    current: {
-      text: 'Mimir',
-      value: 'mimir',
-    },
-    includeAll: false,
-    label: 'Datasource',
-    options: [],
-    refresh: 1,
-    regex: '',
-  },
   g.dashboard.variable.query.new('k8s_namespace') + {
     allValue: '.*',
     current: {
