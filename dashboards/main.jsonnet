@@ -29,6 +29,7 @@
       },
       data: {
         'kubernetes-persistent-volumes.json': std.manifestJson(import 'infra/kubernetes-persistent-volumes.jsonnet'),
+        'sync-to-internal-registry.json': std.manifestJson(import 'infra/sync-to-internal-registry.jsonnet'),
       },
     },
   ],
