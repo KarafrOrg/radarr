@@ -9,3 +9,7 @@ The Prowlarr chart reuses the Cloudflare GCP Secret Manager entries configured i
 creates the `cloudflare-gateway-creds` Kubernetes Secret in the chart's release namespace, as required by its
 Cloudflare Gateway. These are the chart defaults; override `gateway.externalSecret` only if your cluster uses different
 secret names or a different ClusterSecretStore.
+
+Grafana dashboards are generated from `dashboards/main.jsonnet`. Put infrastructure dashboards in the
+`infra-dashboards` ConfigMap; its `grafana_folder: infra` annotation places them in Grafana's `infra` folder once the
+corresponding Grafana sidecar settings in `infra-cluster` are applied.
